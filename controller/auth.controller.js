@@ -1,7 +1,8 @@
 import fs from 'fs';
 import bcrypt from 'bcrypt'
-import { SALT_ROUNDS } from '../constants.js';
+import { SALT_ROUNDS,SECRET } from '../constants.js';
 import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken'
 
 export const registerUser = async (req,res) => {
     const {password,...user} = req.body;
@@ -29,9 +30,11 @@ export const loginUser = async (req,res) => {
     const parsedDb = JSON.parse(db);
     const user= parsedDb.users.find(user => user.email===email);
     const match = await bcrypt.compare(password,user.password);
-    
     if(match){
-        res.status(200).send("success");
+        const token = jwt.sign({
+            data: {id:user.id},
+        }, SECRET, {expiresIn: 3600});
+        res.status(200).send(token);
     }
     else{
         res.status(401).send("failed");
