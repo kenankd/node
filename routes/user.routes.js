@@ -6,8 +6,10 @@ import {getUsers,getUserById,createUser,updateUser,patchUser,deleteUser} from '.
 import { authMiddleware } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
-router.route('/').get(authMiddleware,getUsers).post(createUser);
-router.route('/:id').get(getUserById).put(updateUser).patch(patchUser).delete(deleteUser);
+router.route('/').get(authMiddleware,getUsers).post(authMiddleware,createUser);
+router.route('/:id').get(authMiddleware,getUserById)
+.put(authMiddleware,updateUser).
+patch(authMiddleware,patchUser).delete(authMiddleware,deleteUser);
 /*router.get('/:id',getUserById);
 
 router.post('/',createUser);

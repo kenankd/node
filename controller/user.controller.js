@@ -4,7 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 export const getUsers = (req,res) =>{
     const db = fs.readFileSync("./db.json","utf-8");
     const {users} = JSON.parse(db)
-    console.log(users);
+    const mappedUsers = users.map(user =>{
+      delete user?.password;
+      return user;
+    });
     res.send(users);
 }
 export const getUserById = (req,res) =>{
@@ -14,6 +17,7 @@ export const getUserById = (req,res) =>{
     const {users} = JSON.parse(db)
     const user = users?.find(user => user.id===id);
     if(user){
+      delete user.password;
       res.send(user)
     } 
     else{
@@ -49,7 +53,7 @@ export const updateUser = (req,res) =>{
     const db = fs.readFileSync("./db.json","utf-8");
     const parsedDb = JSON.parse(db);
     const index = parsedDb.users.findIndex(user => user.id === id);
-    parsedDb.users[index]=user;
+    parsedDb.users[index]={...user, password: parsedDb.users[index].password};
     try{
       fs.writeFileSync('./db.json', JSON.stringify(parsedDb));
       res.status(200).send(user);
