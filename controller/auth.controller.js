@@ -18,7 +18,7 @@ export const registerUser = async (req,res) => {
         };
         parsedDb.users.push(userToSave);
         fs.writeFileSync('./db.json', JSON.stringify(parsedDb));
-        res.status(201).send({...user, id:userToSave.id});
+        res.status(201).send({...user, id:userToSave.id, role:userToSave.role});
     }
     catch(e){
         res.status(500).send("Sum went wrong")
@@ -33,7 +33,7 @@ export const loginUser = async (req,res) => {
     const match = await bcrypt.compare(password,user.password);
     if(match){
         const token = jwt.sign({
-            data: {id:user.id},
+            data: {id:user.id, role:user.role},
         }, SECRET, {expiresIn: 3600});
         res.status(200).send(token);
     }

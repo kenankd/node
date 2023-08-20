@@ -4,7 +4,8 @@
 		{
 			"email": "test@gmail.com",
 			"password": "$2b$10$PA9VtilZ6pLLCva2NcU6OeFH0cZwqfMSQcIIpT9Hw0Tw13gLzfc3e",
-			"id": "0552acf6-c9e8-4c11-9b65-6f6b7f34dd23"
+			"id": "0552acf6-c9e8-4c11-9b65-6f6b7f34dd23",
+			"role":"admin"
 		}
 	]
 }
