@@ -40,3 +40,16 @@ export const loginUser = async (req,res) => {
         res.status(401).send("failed");
     }
 }
+
+export const validate = (req,res) => {
+    const {token} = req.body;
+    try{
+        const match = jwt.verify(token,SECRET);   
+        res.status(200).send('Success');  
+    }
+    catch(e){
+        res.status(404).send('Invalid');
+    }
+    
+    console.log(match);
+}
