@@ -1,6 +1,6 @@
 import fs from 'fs';
 import bcrypt from 'bcrypt'
-import { SALT_ROUNDS,SECRET } from '../constants.js';
+import { SALT_ROUNDS,SECRET,ROLES,PERMISSIONS } from '../constants.js';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken'
 
@@ -13,7 +13,8 @@ export const registerUser = async (req,res) => {
         const userToSave = {
             ...user,
             password:hashedPassword,
-            id:uuidv4()
+            id:uuidv4(),
+            role: ROLES.USER
         };
         parsedDb.users.push(userToSave);
         fs.writeFileSync('./db.json', JSON.stringify(parsedDb));

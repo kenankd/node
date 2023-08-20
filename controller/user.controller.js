@@ -2,6 +2,8 @@ import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 export const getUsers = (req,res) =>{
+  console.log(req.metod)
+  console.log(req.url)
     const db = fs.readFileSync("./db.json","utf-8");
     const {users} = JSON.parse(db)
     const mappedUsers = users.map(user =>{

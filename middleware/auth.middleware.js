@@ -5,7 +5,8 @@ import {SECRET} from '../constants.js'
     console.log(req.headers)
     const token = req.headers['x-access-token'];
     try{
-        jwt.verify(token,SECRET);
+        const result=jwt.verify(token,SECRET);
+        req.user=result.data;
         next();
     } catch(error){
         console.log(error);
